@@ -1,0 +1,10 @@
+NumberOfNodes 3
+NumberOfColors 2 
+NodesColorMap{ 
+( 0 , 1 ) ( 1 , 0 ) ( 2 , 1 )  
+}
+Edges {
+< 0 , 1 > 
+< 1 , 0 > < 1 , 2 > 
+< 2 , 1 > 
+}
