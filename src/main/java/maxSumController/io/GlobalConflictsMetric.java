@@ -1,11 +1,9 @@
 package maxSumController.io;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import maxSumController.DiscreteInternalFunction;
 import maxSumController.DiscreteVariableState;
 import maxSumController.Function;
 import maxSumController.GlobalMetric;
@@ -43,22 +41,22 @@ public class GlobalConflictsMetric implements GlobalMetric {
 		return conflicts / 2;
 	}
 
-	
-	
 	private Set<DiscreteVariable<?>> getNeighbouringVariables(
 			InternalVariable<?, ?> variable) {
 		Set<DiscreteVariable<?>> neighbours = new HashSet<DiscreteVariable<?>>();
 		Set<Function> functions = variable.getFunctionDependencies();
 		int vid = Integer.valueOf(variable.getName().substring(1));
 
-		for (Function function : functions) {
-			if (vid == Integer.valueOf(function.getName().substring(1))) {
-				DiscreteInternalFunction ifunction = (DiscreteInternalFunction) function;
-				neighbours
-						.addAll((Collection<? extends DiscreteVariable<?>>) ifunction
-								.getVariableDependencies());
-			}
-		}
-		return neighbours;
+		// for (Function function : functions) {
+		// if (vid == Integer.valueOf(function.getName().substring(1))) {
+		// DiscreteInternalFunction ifunction = (DiscreteInternalFunction)
+		// function;
+		// neighbours
+		// .addAll((Collection<? extends DiscreteVariable<?>>) ifunction
+		// .getVariableDependencies());
+		// }
+		// }
+		throw new IllegalArgumentException("Not implemented");
+		// return neighbours;
 	}
 }

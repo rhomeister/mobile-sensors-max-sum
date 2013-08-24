@@ -21,19 +21,21 @@ import org.apache.commons.lang.Validate;
 public class MinimisingFunction extends LinkBoundedInternalFunction implements
 		BBDiscreteInternalFunction {
 
-	private BBDiscreteInternalFunction wrappedFunction;
-	private Set<DiscreteInternalVariable> rejectedVariables;
+	private final BBDiscreteInternalFunction wrappedFunction;
+	private final Set<DiscreteInternalVariable> rejectedVariables;
 	private boolean debug;
-	private BBFunctionCache cache;
+	private final BBFunctionCache cache;
 
 	public MinimisingFunction(BBDiscreteInternalFunction wrappedFunction,
 			Set<DiscreteInternalVariable> rejectedVariables) {
 		super(wrappedFunction.getName());
 		setOwningAgentIdentifier(wrappedFunction.getOwningAgentIdentifier());
 
-		Validate.isTrue(wrappedFunction.getVariableDependencies().containsAll(
-				rejectedVariables), "Rejected variables have to be a subset "
-				+ "of the variable dependencies");
+		Validate.isTrue(
+				wrappedFunction.getVariableDependencies().containsAll(
+						rejectedVariables),
+				"Rejected variables have to be a subset "
+						+ "of the variable dependencies");
 
 		this.wrappedFunction = wrappedFunction;
 		this.rejectedVariables = rejectedVariables;
@@ -139,11 +141,11 @@ public class MinimisingFunction extends LinkBoundedInternalFunction implements
 			// expand children to find maximum value
 			for (PartialJointVariableState partialJointVariableState : children) {
 				if (lower)
-					bestUtility = Math.min(bestUtility, getBound(
-							partialJointVariableState, true));
+					bestUtility = Math.min(bestUtility,
+							getBound(partialJointVariableState, true));
 				else
-					bestUtility = Math.max(bestUtility, getBound(
-							partialJointVariableState, false));
+					bestUtility = Math.max(bestUtility,
+							getBound(partialJointVariableState, false));
 			}
 
 			// store values so recomputation is not needed
@@ -160,7 +162,7 @@ public class MinimisingFunction extends LinkBoundedInternalFunction implements
 		// JointStateIterator(
 		// (Set<? extends DiscreteVariable<?>>) rejectedVariables);
 		//
-		//		
+		//
 		// double bestUtility = lower ? Double.POSITIVE_INFINITY
 		// : Double.NEGATIVE_INFINITY;
 		//
@@ -189,8 +191,9 @@ public class MinimisingFunction extends LinkBoundedInternalFunction implements
 	private double getLeafValue(PartialJointVariableState<?> partialState) {
 		double bestUtility = Double.POSITIVE_INFINITY;
 
-		JointStateIterator fixedVariableValueIterator = new JointStateIterator(
-				(Set<? extends DiscreteVariable<?>>) rejectedVariables);
+		JointStateIterator fixedVariableValueIterator = null; // new
+																// JointStateIterator(
+		// (Set<? extends DiscreteVariable<?>>) rejectedVariables);
 
 		while (fixedVariableValueIterator.hasNext()) {
 			VariableJointState next = fixedVariableValueIterator.next();
@@ -210,8 +213,8 @@ public class MinimisingFunction extends LinkBoundedInternalFunction implements
 				throw new IllegalArgumentException();
 			}
 
-			bestUtility = Math.min(bestUtility, wrappedFunction
-					.evaluate(combinedState.getJointState()));
+			bestUtility = Math.min(bestUtility,
+					wrappedFunction.evaluate(combinedState.getJointState()));
 		}
 
 		return bestUtility;
@@ -253,7 +256,7 @@ public class MinimisingFunction extends LinkBoundedInternalFunction implements
 		System.out.println("___*******END MIN FUNCTION RESULT*******___");
 
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Minimising" + super.toString();
